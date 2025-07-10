@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://mwt3xmgk57fp"]
+[gd_scene load_steps=9 format=3 uid="uid://mwt3xmgk57fp"]
 
-[ext_resource type="Script" uid="uid://e5v1g33nyw1i" path="res://scripts/player.gd" id="1_e2g0d"]
 [ext_resource type="Texture2D" uid="uid://demhxgkx0by0g" path="res://assets/sprites/oie_test.png" id="2_sqsu7"]
 [ext_resource type="Script" uid="uid://dxs3fxyc5regj" path="res://scripts/Player/fsm_player.gd" id="3_pnpb5"]
 [ext_resource type="Script" uid="uid://b1iuwmbedoa6u" path="res://scripts/Player/idle.gd" id="4_l7cd4"]
+[ext_resource type="Script" uid="uid://cpwnssn70ktv1" path="res://scripts/Player/run.gd" id="5_v1av7"]
+[ext_resource type="Script" uid="uid://cct5f8xa6u6x7" path="res://scripts/Player/jump.gd" id="6_rqsho"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dovo2"]
 atlas = ExtResource("2_sqsu7")
@@ -24,7 +25,6 @@ animations = [{
 radius = 0.0782663
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
-script = ExtResource("1_e2g0d")
 
 [node name="Sprite" type="AnimatedSprite3D" parent="."]
 texture_filter = 0
@@ -37,5 +37,11 @@ shape = SubResource("SphereShape3D_lvxji")
 [node name="FSM" type="Node" parent="."]
 script = ExtResource("3_pnpb5")
 
-[node name="Idle" type="Node" parent="FSM"]
+[node name="idle" type="Node" parent="FSM"]
 script = ExtResource("4_l7cd4")
+
+[node name="run" type="Node" parent="FSM"]
+script = ExtResource("5_v1av7")
+
+[node name="jump" type="Node" parent="FSM"]
+script = ExtResource("6_rqsho")

@@ -8,7 +8,7 @@ signal finished(next_state_name)
 
 # Initialize the state. E.g. change the animation.
 func enter():
-	pass
+	print("enter run mode")
 
 
 # Clean up the state. Reinitialize values like a timer.
@@ -26,12 +26,3 @@ func update(_delta):
 
 func _on_animation_finished(_anim_name):
 	pass
-
-
-
-
-func _physics_process(delta: float) -> void:
-	if Input.is_action_pressed("ui_left") or Input.is_action_pressed("ui_right"):
-		finished.emit("run")
-	elif Input.is_action_pressed("jump"):
-		finished.emit("jump")

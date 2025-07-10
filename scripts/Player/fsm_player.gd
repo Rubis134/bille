@@ -7,9 +7,6 @@ extends Node
 
 signal state_changed(current_state)
 
-# You should set a starting node from the inspector or on the node that inherits
-# from this state machine interface. If you don't, the game will default to
-# the first state in the state machine's children.
 @export var start_state: NodePath
 var states_map = {}
 
@@ -22,20 +19,21 @@ var _active = false:
 
 func _enter_tree():
 	if start_state.is_empty():
-		start_state = get_child(0).get_path()
+		start_state = get_path_to(get_child(0))  # ✅ Correction ici
+
 	for child in get_children():
+		states_map[child.name] = child           # ✅ Ajout ici
 		var err = child.finished.connect(_change_state)
 		if err:
 			printerr(err)
-	initialize(start_state)
 
+	initialize(start_state)
 
 func initialize(initial_state):
 	_active = true
 	states_stack.push_front(get_node(initial_state))
 	current_state = states_stack[0]
 	current_state.enter()
-
 
 func set_active(value):
 	set_physics_process(value)
@@ -44,20 +42,16 @@ func set_active(value):
 		states_stack = []
 		current_state = null
 
-
 func _unhandled_input(event):
 	current_state.handle_input(event)
 
-
 func _physics_process(delta):
 	current_state.update(delta)
-
 
 func _on_animation_finished(anim_name):
 	if not _active:
 		return
 	current_state._on_animation_finished(anim_name)
-
 
 func _change_state(state_name):
 	if not _active:
