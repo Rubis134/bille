@@ -24,6 +24,7 @@ func _enter_tree():
 	for child in get_children():
 		states_map[child.name] = child           # ✅ Ajout ici
 		var err = child.finished.connect(_change_state)
+		child.player = get_parent()
 		if err:
 			printerr(err)
 

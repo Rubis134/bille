@@ -3,12 +3,16 @@ extends Node
 # but forces us to pass the right arguments to the methods below
 # and makes sure every State object had all of these methods.
 
+
+var player : CharacterBody3D
+
 # warning-ignore:unused_signal
 signal finished(next_state_name)
 
 # Initialize the state. E.g. change the animation.
 func enter():
 	print("enter idle mode")
+	#Animation
 
 
 # Clean up the state. Reinitialize values like a timer.
@@ -31,7 +35,7 @@ func _on_animation_finished(_anim_name):
 
 
 func _physics_process(delta: float) -> void:
-	if Input.is_action_pressed("ui_left") or Input.is_action_pressed("ui_right"):
+	if Input.is_action_pressed("left") or Input.is_action_pressed("right"):
 		finished.emit("run")
 	elif Input.is_action_pressed("jump"):
 		finished.emit("jump")
