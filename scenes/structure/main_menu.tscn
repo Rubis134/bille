@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://1mcohnmgo2sd"]
+
+[ext_resource type="Script" uid="uid://by7yxgp0xyffr" path="res://scripts/main_menu.gd" id="1_suvu3"]
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_suvu3")
+
+[node name="TitleLabel" type="Label" parent="."]
+offset_left = 486.0
+offset_top = 40.0
+offset_right = 680.0
+offset_bottom = 115.0
+text = "Titre provisoire
+(ceci est le main menu)
+(texture à faire plus tard)"
+
+[node name="StartButton" type="Button" parent="."]
+offset_left = 472.0
+offset_top = 196.0
+offset_right = 690.0
+offset_bottom = 251.0
+text = "Jouer"
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
