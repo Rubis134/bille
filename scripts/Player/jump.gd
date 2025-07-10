@@ -13,7 +13,7 @@ func enter():
 
 # Clean up the state. Reinitialize values like a timer.
 func exit():
-	pass
+	print("exit jump mode")
 
 
 func handle_input(_event):

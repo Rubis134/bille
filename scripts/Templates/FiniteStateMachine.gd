@@ -1,3 +1,10 @@
+
+
+
+# NOTE PERSO :  YA MOYEN QUE CETTE FSM MARCHE PAS BIEN, SURTOUT SUR LE CHANGEMENT EN BOUCLE D'ETAT, CHECK LA FSM DU PLAYER POUR UNE QUI FIX CA
+
+
+
 extends Node
 # Base interface for a generic state machine.
 # It handles initializing, setting the machine active or not

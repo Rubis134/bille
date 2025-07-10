@@ -8,12 +8,12 @@ signal finished(next_state_name)
 
 # Initialize the state. E.g. change the animation.
 func enter():
-	pass
+	print("enter idle mode")
 
 
 # Clean up the state. Reinitialize values like a timer.
 func exit():
-	pass
+	print("exit idle mode")
 
 
 func handle_input(_event):
@@ -35,3 +35,5 @@ func _physics_process(delta: float) -> void:
 		finished.emit("run")
 	elif Input.is_action_pressed("jump"):
 		finished.emit("jump")
+	else:
+		finished.emit("idle")
