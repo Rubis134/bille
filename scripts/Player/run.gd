@@ -57,5 +57,12 @@ func update(_delta):
 	player.move_and_slide()
 
 
+func _physics_process(delta: float) -> void:
+	if Input.is_action_pressed("jump"):
+		finished.emit("jump")
+	else:
+		finished.emit("run")
+
+
 func _on_animation_finished(_anim_name):
 	pass

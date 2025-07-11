@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dyk0iyhg2xe7g"]
 
-[ext_resource type="PackedScene" uid="uid://mwt3xmgk57fp" path="res://scenes/player/playerfsm.tscn" id="1_41qrk"]
+[ext_resource type="PackedScene" uid="uid://dp22eirfg7j8l" path="res://scenes/player/player.tscn" id="1_41qrk"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_n16fr"]
 
@@ -36,12 +36,13 @@ transform = Transform3D(-0.747052, 0, 0, 0, 1.0066, 0, 0, 0, 0.355631, -9.16048,
 use_collision = true
 mesh = SubResource("BoxMesh_n16fr")
 
-[node name="CharacterBody3D" parent="." instance=ExtResource("1_41qrk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.609524, 0)
-
-[node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.107584, 0.391563)
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.761029, 0.648718, 0, -0.648718, 0.761029, 0, 2.34559, 2.53695)
 light_color = Color(0.990873, 0.973798, 0.68257, 1)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.691894, 0.660147)
+fov = 85.2477
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("1_41qrk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.759727, -0.245262)

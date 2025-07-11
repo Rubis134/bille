@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dp22eirfg7j8l"]
+[gd_scene load_steps=10 format=3 uid="uid://dp22eirfg7j8l"]
 
 [ext_resource type="Texture2D" uid="uid://demhxgkx0by0g" path="res://assets/sprites/oie_test.png" id="1_8afob"]
-[ext_resource type="Script" uid="uid://e5v1g33nyw1i" path="res://scripts/player.gd" id="1_gmlin"]
+[ext_resource type="Script" uid="uid://d25p8as5qjxa2" path="res://scripts/Player/limbo_fsm/player.gd" id="1_dovo2"]
+[ext_resource type="Script" uid="uid://6atsb825j7oq" path="res://scripts/Player/limbo_fsm/idle.gd" id="3_gmlin"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dovo2"]
 atlas = ExtResource("1_8afob")
@@ -21,8 +22,20 @@ animations = [{
 [sub_resource type="SphereShape3D" id="SphereShape3D_lvxji"]
 radius = 0.0782663
 
+[sub_resource type="Animation" id="Animation_lvxji"]
+resource_name = "idle"
+
+[sub_resource type="Animation" id="Animation_p47bc"]
+resource_name = "walk"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_75vfm"]
+_data = {
+&"idle": SubResource("Animation_lvxji"),
+&"walk": SubResource("Animation_p47bc")
+}
+
 [node name="CharacterBody3D" type="CharacterBody3D"]
-script = ExtResource("1_gmlin")
+script = ExtResource("1_dovo2")
 
 [node name="Sprite" type="AnimatedSprite3D" parent="."]
 texture_filter = 0
@@ -31,3 +44,23 @@ animation = &"idle"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_lvxji")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_75vfm")
+}
+
+[node name="LimboHSM" type="LimboHSM" parent="."]
+
+[node name="idle" type="LimboState" parent="LimboHSM"]
+script = ExtResource("3_gmlin")
+
+[node name="walk" type="LimboState" parent="LimboHSM"]
+
+[node name="run" type="LimboState" parent="LimboHSM"]
+
+[node name="jump" type="LimboState" parent="LimboHSM"]
+
+[node name="fall" type="LimboState" parent="LimboHSM"]
+
+[node name="dash" type="LimboState" parent="LimboHSM"]
