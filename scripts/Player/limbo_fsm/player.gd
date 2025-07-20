@@ -6,9 +6,11 @@ extends CharacterBody3D
 @onready var idle_state = $LimboHSM/idle
 
 var speed = 1.0
-var gravity = -1
+var gravity = -0.5
 const jump_power = 5
 var dir
+#var jump_state
+#var double_jump_state
 
 
 func _ready():
@@ -53,13 +55,18 @@ func _initialize_state_machine():
 	var walk_state = LimboState.new().named("walk_state").call_on_enter(walk_start).call_on_update(walk_update)
 	var run_state = LimboState.new().named("run_state").call_on_enter(run_start).call_on_update(run_update)
 	var jump_state = LimboState.new().named("jump_state").call_on_enter(jump_start).call_on_update(jump_update)
+	var double_jump_state = LimboState.new().named("double_jump_state").call_on_enter(double_jump_start).call_on_update(double_jump_update)
 	var fall_state = LimboState.new().named("fall_state").call_on_enter(fall_start).call_on_update(fall_update)
 	var dash_state = LimboState.new().named("dash_state").call_on_enter(dash_start).call_on_update(dash_update)
+	
+	#jump_state = LimboState.new().named("jump_state").call_on_enter(jump_start).call_on_update(jump_update)
+	#double_jump_state = LimboState.new().named("double_jump_state").call_on_enter(double_jump_start).call_on_update(double_jump_update)
 	
 	main_sm.add_child(idle_state)
 	main_sm.add_child(walk_state)
 	main_sm.add_child(run_state)
 	main_sm.add_child(jump_state)
+	main_sm.add_child(double_jump_state)
 	main_sm.add_child(fall_state)
 	main_sm.add_child(dash_state)
 	
@@ -68,6 +75,7 @@ func _initialize_state_machine():
 	main_sm.add_transition(idle_state, walk_state, &"to_walk")
 	main_sm.add_transition(main_sm.ANYSTATE, idle_state, &"state_ended")
 	main_sm.add_transition(idle_state, jump_state, &"to_jump")
+	main_sm.add_transition(jump_state, double_jump_state, &"to_double_jump")
 	main_sm.add_transition(walk_state, jump_state, &"to_jump")
 	main_sm.add_transition(run_state, jump_state, &"to_jump")
 	
@@ -102,6 +110,14 @@ func jump_start():
 	#animation_sprite.play("jump")
 	velocity.y = jump_power
 func jump_update(delta: float):
+	if is_on_floor():
+		main_sm.dispatch(&"state_ended")
+		
+func double_jump_start():
+	print("jump start")
+	#animation_sprite.play("jump")
+	velocity.y = jump_power
+func double_jump_update(delta: float):
 	if is_on_floor():
 		main_sm.dispatch(&"state_ended")
 	

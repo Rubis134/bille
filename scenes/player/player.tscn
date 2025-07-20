@@ -61,6 +61,8 @@ script = ExtResource("3_gmlin")
 
 [node name="jump" type="LimboState" parent="LimboHSM"]
 
+[node name="double_jump" type="LimboState" parent="LimboHSM"]
+
 [node name="fall" type="LimboState" parent="LimboHSM"]
 
 [node name="dash" type="LimboState" parent="LimboHSM"]
