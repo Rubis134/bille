@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://ec686g6jcq44"]
+
+[ext_resource type="Script" uid="uid://0hkl7dtx7an7" path="res://scripts/game_elements/empty_death.gd" id="1_onwfk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sjprc"]
+
+[node name="Empty_death_zone" type="Node3D"]
+
+[node name="Area3D" type="Area3D" parent="."]
+script = ExtResource("1_onwfk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_sjprc")
+debug_color = Color(0.95932, 0.105688, 0.437158, 0.42)

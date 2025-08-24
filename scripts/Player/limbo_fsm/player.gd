@@ -1,4 +1,6 @@
 extends CharacterBody3D
+class_name Player
+
 
 
 @export var main_sm : LimboHSM
@@ -58,6 +60,7 @@ func _initialize_state_machine():
 	var double_jump_state = LimboState.new().named("double_jump_state").call_on_enter(double_jump_start).call_on_update(double_jump_update)
 	var fall_state = LimboState.new().named("fall_state").call_on_enter(fall_start).call_on_update(fall_update)
 	var dash_state = LimboState.new().named("dash_state").call_on_enter(dash_start).call_on_update(dash_update)
+	var death_state = LimboState.new().named("death_state").call_on_enter(death_start).call_on_update(death_update)
 	
 	#jump_state = LimboState.new().named("jump_state").call_on_enter(jump_start).call_on_update(jump_update)
 	#double_jump_state = LimboState.new().named("double_jump_state").call_on_enter(double_jump_start).call_on_update(double_jump_update)
@@ -69,6 +72,7 @@ func _initialize_state_machine():
 	main_sm.add_child(double_jump_state)
 	main_sm.add_child(fall_state)
 	main_sm.add_child(dash_state)
+	main_sm.add_child(death_state)
 	
 	main_sm.initial_state = idle_state
 	
@@ -78,6 +82,8 @@ func _initialize_state_machine():
 	main_sm.add_transition(jump_state, double_jump_state, &"to_double_jump")
 	main_sm.add_transition(walk_state, jump_state, &"to_jump")
 	main_sm.add_transition(run_state, jump_state, &"to_jump")
+	main_sm.add_transition(main_sm.ANYSTATE, death_state, &"to_die")
+	main_sm.add_transition(death_state, idle_state, &"to_revive") # A voir si y remplacer par state ended est identique
 	
 	main_sm.initialize(self)
 	main_sm.set_active(true)
@@ -120,7 +126,8 @@ func double_jump_start():
 func double_jump_update(delta: float):
 	if is_on_floor():
 		main_sm.dispatch(&"state_ended")
-	
+
+
 func fall_start():
 	pass
 func fall_update(delta: float):
@@ -129,4 +136,15 @@ func fall_update(delta: float):
 func dash_start():
 	pass
 func dash_update(delta: float):
+	pass
+	
+func death_start():
+	print("DEATH MESSAGE & PROTOCOL")
+	# CHANGER LE SPRITE = FAIRE UNE ANIM OU LE PERSO DISPARAIT (visuellement)
+	await get_tree().create_timer(2.0).timeout
+	# Fait un timer qui s'autodelete à la fin par le timeout
+	get_tree().change_scene_to_file("res://scenes/world/world_1.tscn")
+	# Temporaire == Là ça reset la scene comme au début, en vrai faudra tp
+	# Remplacer après par un "to_revive" + tp au dernier checkpoint
+func death_update(delta: float):
 	pass
